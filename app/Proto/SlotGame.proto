@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package slot;
+
+// 玩家信息
+message Player {
+  string player_id = 1;
+  string player_name = 2;
+  int64 balance = 3;
+  int32 level = 4;
+  int64 experience = 5;
+  int64 last_login_time = 6;
+  int64 created_time = 7;
+}
+
+// 老虎机符号
+message Symbol {
+  string symbol_id = 1;
+  string name = 2;
+  int32 weight = 3;
+  int32 multiplier = 4;
+  bool is_wild = 5;
+  bool is_scatter = 6;
+}
+
+// 旋转结果
+message SpinResult {
+  repeated string reels = 1;  // 3x5 的符号矩阵
+  int64 win_amount = 2;
+  repeated WinLine win_lines = 3;
+  bool is_bonus = 4;
+  int64 new_balance = 5;
+}
+
+// 赢钱线路
+message WinLine {
+  int32 line_index = 1;
+  string symbol = 2;
+  int32 count = 3;
+  int64 amount = 4;
+}
+
+// 房间信息
+message Room {
+  string room_id = 1;
+  string room_name = 2;
+  int32 max_players = 3;
+  int32 current_players = 4;
+  int64 min_bet = 5;
+  int64 max_bet = 6;
+  string status = 7;  // waiting, playing, closed
+}
+
+// 客户端消息
+message ClientMessage {
+  string type = 1;  // JOIN_ROOM, LEAVE_ROOM, SPIN, BUY_BONUS
+  string player_id = 2;
+  string room_id = 3;
+  int64 bet_amount = 4;
+  string bonus_type = 5;
+}
+
+// 服务端消息
+message ServerMessage {
+  string type = 1;  // ROOM_UPDATE, PLAYER_UPDATE, SPIN_RESULT, ERROR
+  Room room = 2;
+  Player player = 3;
+  SpinResult spin_result = 4;
+  string error_message = 5;
+  repeated Room available_rooms = 6;
+}

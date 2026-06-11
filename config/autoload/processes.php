@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+return [
+    Hyperf\AsyncQueue\Process\ConsumerProcess::class,
+    Hyperf\Crontab\Process\CrontabDispatcherProcess::class,
+    // Hyperf\Metric\Process\MetricProcess::class,
+    // App\Process\SecondDataGeneratorProcess::class,
+];

@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package auth;
+
+// 用户注册请求
+message RegisterRequest {
+  string username = 1;
+  string password = 2;
+  string email = 3;
+  string nickname = 4;
+}
+
+// 用户注册响应
+message RegisterResponse {
+  enum ResultCode {
+    SUCCESS = 0;
+    FAILED = 1;
+    USERNAME_EXISTS = 2;
+    EMAIL_EXISTS = 3;
+    INVALID_PARAMS = 4;
+  }
+
+  ResultCode code = 1;
+  string message = 2;
+  UserInfo user = 3;
+}
+
+// 用户登录请求
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+// 用户登录响应
+message LoginResponse {
+  enum ResultCode {
+    SUCCESS = 0;
+    FAILED = 1;
+    INVALID_CREDENTIALS = 2;
+    USER_LOCKED = 3;
+  }
+
+  ResultCode code = 1;
+  string token = 2;
+  UserInfo user = 3;
+  string message = 4;
+  int64 server_time = 5;
+}
+
+// 用户信息
+message UserInfo {
+  int64 user_id = 1;
+  string username = 2;
+  string nickname = 3;
+  string email = 4;
+  int32 level = 5;
+  int64 exp = 6;
+  int64 coins = 7;
+  int32 vip_level = 8;
+  repeated int32 unlocked_avatars = 9;
+  int64 register_time = 10;
+  int64 last_login_time = 11;
+}
+
+// Token 验证请求
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+// Token 验证响应
+message VerifyTokenResponse {
+  bool valid = 1;
+  UserInfo user = 2;
+  string message = 3;
+}
+
+// 获取用户信息请求
+message GetUserInfoRequest {
+  int64 user_id = 1;
+}
+
+// 通用响应
+message BaseResponse {
+  int32 code = 1;
+  string message = 2;
+  int64 timestamp = 3;
+}

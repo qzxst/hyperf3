@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package game;
+
+// 玩家状态
+message Player {
+  string id = 1;
+  string name = 2;
+  uint32 hp = 3;
+  uint32 maxHp = 4;
+}
+
+// 房间信息
+message Room {
+  string id = 1;
+  repeated Player players = 2;
+  string current_turn = 3;
+  string status = 4;
+}
+
+// 战斗动作
+message BattleAction {
+  string playerId = 1;
+  string action = 2;
+  string targetId = 3;
+  uint32 value = 4;
+}
+
+// 客户端上行消息
+message ClientMessage {
+  string type = 1;
+  BattleAction action = 2;
+}
+
+// 服务端下行消息
+message ServerMessage {
+  string type = 1;
+  repeated Player players = 2;
+  string result = 3;
+  Player player = 4;
+  bool is_my_turn = 5; // 新增字段，指示当前接收消息的玩家是否轮到
+}
